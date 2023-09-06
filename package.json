@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Elbrus-Bootcamp/project-sudoku.git"
+    "url": "git+https://github.com/elbrusboot-camp-online/project-sudoku.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Elbrus-Bootcamp/project-sudoku/issues"
+    "url": "https://github.com/elbrusboot-camp-online/project-sudoku/issues"
   },
-  "homepage": "https://github.com/Elbrus-Bootcamp/project-sudoku#readme",
+  "homepage": "https://github.com/elbrusboot-camp-online/project-sudoku#readme",
   "devDependencies": {
     "eslint": "^8.44.0",
     "eslint-config-airbnb-base": "^15.0.0",
