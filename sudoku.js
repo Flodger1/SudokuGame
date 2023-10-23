@@ -151,20 +151,20 @@ function isValid(board, row, column, number) {
 
 
 
-// isWork
-// function transformTo3x3(arr) {
+isWork
+function transformTo3x3(arr) {
 
-// const arrSize = 3;
+const arrSize = 3;
 
-// const newArr = []
+const newArr = []
 
-// for (let i=0; i<arr.length; i += arrSize){
-//   newArr.push(arr.slice(i, i + arrSize))
-// }
-// return newArr
-// }
+for (let i=0; i<arr.length; i += arrSize){
+  newArr.push(arr.slice(i, i + arrSize))
+}
+return newArr
+}
 
-// console.log(transformTo3x3(arr));
+console.log(transformTo3x3(arr));
 
 
 
