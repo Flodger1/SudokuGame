@@ -34,6 +34,33 @@ function isSolved(board) {
    */
 }
 
+function gorizontCheck (arr) {
+  
+for( let i = 0; i < arr.length; i++){
+  const flattened = [].concat(...arr[i]);
+  const сheckNumbers = Array.from({ length: 9 }, (_, i) => i + 1)
+                          .every(num => flattened.includes(num));
+  if(!сheckNumbers) {
+    return false;
+  }
+}  
+return true;
+}
+
+function vertikalCheck(arr) {
+  const result = [];
+
+  for (let i =0; i<arr.length; i++) {
+    const column = [];
+    for (let j =0; j<arr.length; j++) {
+      column.push(arr[j][i]);
+    }
+  result.push(column)
+  }
+  return result
+}
+console.log(vertikalCheck(arr));
+
 function prettyBoard() {
   /**
    * Принимает игровое поле в том формате, в котором его вернули из функции solve.
