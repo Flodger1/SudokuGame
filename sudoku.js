@@ -1,4 +1,6 @@
+
 /* eslint-disable */
+
 const fs = require("fs");
 
 function read() {
@@ -51,6 +53,17 @@ function isSolved(board) {
    * Возвращает булевое значение — решено это игровое поле или нет.
    */
 }
+const fromSolve = [
+  [5, 3, 4, 6, 7, 8, 9, 1, 2],
+  [6, 7, 2, 1, 9, 5, 3, 4, 8],
+  [1, 9, 8, 3, 4, 2, 5, 6, 7],
+  [8, 5, 9, 7, 6, 1, 4, 2, 3],
+  [4, 2, 6, 8, 5, 3, 7, 9, 1],
+  [7, 1, 3, 9, 2, 4, 8, 5, 6],
+  [9, 6, 1, 5, 3, 7, 2, 8, 4],
+  [2, 8, 7, 4, 1, 9, 6, 3, 5],
+  [3, 4, 5, 2, 8, 6, 1, 7, 9],
+];
 
 function gorizontCheck(arr) {
   for (let i = 0; i < arr.length; i++) {
@@ -66,16 +79,18 @@ function gorizontCheck(arr) {
 }
 
 function vertikalCheck(arr) {
-  const result = [];
-
   for (let i = 0; i < arr.length; i++) {
     const column = [];
     for (let j = 0; j < arr.length; j++) {
       column.push(arr[j][i]);
     }
-    result.push(column);
-  }
-  return result;
+    const сheckNumbers = Array.from({ length: 9 }, (_, i) => i + 1).every(
+      (num) => column.includes(num)
+    );
+    if(!сheckNumbers){
+      return false
+    }
+  } return true
 }
 
 function prettyBoard() {
@@ -85,6 +100,8 @@ function prettyBoard() {
    * Подумай, как симпатичнее его вывести.
    */
 }
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 
 // isWork
@@ -103,6 +120,24 @@ function transformFromSptring(str) {
   return newArr;
 }
 
+function isValid(board, row, column, number) {
+  for (let i = 0; i < row.length; i++) {
+    if (board[row][i] === number) {
+      return false;
+    }
+
+    for (let i = 0; i > row.length; i++) {
+      if (board[column][i] === number) {
+        return false;
+      }
+    }
+  }
+}
+
+// isWork
+// function transformTo3x3(arr) {
+
+// const arrSize = 3;
 const stringSudoku = read();
 
 // console.log(transformFromSptring(stringSudoku));
@@ -173,6 +208,7 @@ function solver(board) {
     return null;
   }
 }
+
 
 
 const board = transformFromSptring(stringSudoku);
