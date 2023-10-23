@@ -120,6 +120,7 @@ function transformFromSptring(str) {
   return newArr;
 }
 
+
 function isValid(board, row, column, number) {
   for (let i = 0; i < row.length; i++) {
     if (board[row][i] === number) {
