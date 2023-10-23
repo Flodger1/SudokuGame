@@ -1,4 +1,4 @@
-eslint - disable;
+// eslint - disable;
 const fs = require("fs");
 
 function read() {
@@ -33,6 +33,17 @@ function isSolved(board) {
    * Возвращает булевое значение — решено это игровое поле или нет.
    */
 }
+const fromSolve = [
+  [5, 3, 4, 6, 7, 8, 9, 1, 2],
+  [6, 7, 2, 1, 9, 5, 3, 4, 8],
+  [1, 9, 8, 3, 4, 2, 5, 6, 7],
+  [8, 5, 9, 7, 6, 1, 4, 2, 3],
+  [4, 2, 6, 8, 5, 3, 7, 9, 1],
+  [7, 1, 3, 9, 2, 4, 8, 5, 6],
+  [9, 6, 1, 5, 3, 7, 2, 8, 4],
+  [2, 8, 7, 4, 1, 9, 6, 3, 5],
+  [3, 4, 5, 2, 8, 6, 1, 7, 9],
+];
 
 function gorizontCheck(arr) {
   for (let i = 0; i < arr.length; i++) {
@@ -48,23 +59,20 @@ function gorizontCheck(arr) {
 }
 
 function vertikalCheck(arr) {
-  const result = [];
-
   for (let i = 0; i < arr.length; i++) {
     const column = [];
     for (let j = 0; j < arr.length; j++) {
       column.push(arr[j][i]);
     }
-    result.push(column);
     const сheckNumbers = Array.from({ length: 9 }, (_, i) => i + 1).every(
-      (num) => flattened.includes(num));
-    if (!сheckNumbers) {
-      return false;
+      (num) => column.includes(num)
+    );
+    if(!сheckNumbers){
+      return false
     }
-  }return true;
-  
+  } return true
 }
-console.log(vertikalCheck(arr));
+
 
 function prettyBoard() {
   /**
@@ -73,66 +81,6 @@ function prettyBoard() {
    * Подумай, как симпатичнее его вывести.
    */
 }
-
-const fromSolve = [
-  [5, 3, 4, 6, 7, 8, 9, 1, 2],
-  [6, 7, 2, 1, 9, 5, 3, 4, 8],
-  [1, 9, 8, 3, 4, 2, 5, 6, 7],
-  [8, 5, 9, 7, 6, 1, 4, 2, 3],
-  [4, 2, 6, 8, 5, 3, 7, 9, 1],
-  [7, 1, 3, 9, 2, 4, 8, 5, 6],
-  [9, 6, 1, 5, 3, 7, 2, 8, 4],
-  [2, 8, 7, 4, 1, 9, 6, 3, 5],
-  [3, 4, 5, 2, 8, 6, 1, 7, 9],
-];
-
-[
-  [
-    [5, 3, 4],
-    [6, 7, 8],
-    [9, 1, 2],
-  ],
-  [
-    [6, 7, 2],
-    [1, 9, 5],
-    [3, 4, 8],
-  ],
-  [
-    [1, 9, 8],
-    [3, 4, 2],
-    [5, 6, 7],
-  ],
-  [
-    [8, 5, 9],
-    [7, 6, 1],
-    [4, 2, 3],
-  ],
-  [
-    [4, 2, 6],
-    [8, 5, 3],
-    [7, 9, 1],
-  ],
-  [
-    [7, 1, 3],
-    [9, 2, 4],
-    [8, 5, 6],
-  ],
-  [
-    [9, 6, 1],
-    [5, 3, 7],
-    [2, 8, 4],
-  ],
-  [
-    [2, 8, 7],
-    [4, 1, 9],
-    [6, 3, 5],
-  ],
-  [
-    [3, 4, 5],
-    [2, 8, 6],
-    [1, 7, 9],
-  ],
-];
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -151,12 +99,6 @@ function transformFromSptring(str) {
   }
   return newArr;
 }
-
-console.log(
-  transformTo9x9(
-    "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
-  )
-);
 
 function isValid(board, row, column, number) {
   for (let i = 0; i < row.length; i++) {
