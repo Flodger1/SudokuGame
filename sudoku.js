@@ -7,7 +7,7 @@ function read() {
   // разбиваем содержимое на отдельные строки
   const minBoard = board.split('\n').filter((line) => line !== '');
   // номер судоку
-  let minBoardNum = Number(process.argv[2]) || 1;
+  let minBoardNum = Number(process.argv[2]) || 2;
   // ограничиваем номер судоку (длина массива)
   if (minBoardNum > minBoard.length) {
     minBoardNum = minBoard.length;
