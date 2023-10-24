@@ -1,7 +1,7 @@
 /* eslint-disable */
-
 const fs = require("fs");
-
+const { table } = require("table");
+// ******************************************************************************************
 function read() {
   const path = "./puzzles.txt";
   // извлекаем содержимое puzzles.txt
@@ -9,50 +9,56 @@ function read() {
   // разбиваем содержимое на отдельные строки
   const minBoard = board.split("\n").filter((line) => line !== "");
   // номер судоку
-  let minBoardNum = Number(process.argv[2]) || 15;
+  let minBoardNum = Number(process.argv[2]) || 1;
   // ограничиваем номер судоку (длина массива)
+  // если ввели несуществующий номер судоку, то вывести последний(15)
   if (minBoardNum > minBoard.length) {
     minBoardNum = minBoard.length;
   }
-
+  // выводим строку с номером судоку, чтобы понимать какой у нас судоку
   const sudoku = minBoard[minBoardNum - 1];
-  return sudoku; 
+  console.log(`Решение судоку № ${minBoardNum}`);
+  return sudoku;
+}
+// ******************************************************************************************
+// isWork
+// формируем массив: на входе строка, на выходе массив из чисел ===>
+// преобразование входящего судоку в виде строки в массив
+// делим строку по 9 элементов и добавляем в массив
+// проверяем наличие числа ( если число, то преобразуем из строкового типа в тип number, если "-", меняем его на 0)
+
+function transformFromSptring(str) {
+  const arr = [...str];
+
+  const arrSize = 9;
+  const newArr = [];
+
+  for (let i = 0; i < arr.length; i += arrSize) {
+    const periodArray = arr
+      .slice(i, i + arrSize)
+      .map((item) => (item === "-" ? 0 : parseInt(item, 10)));
+    newArr.push(periodArray);
+  }
+  return newArr;
 }
 
-// isWork
-function transformFromSptring(str) {
-    const arr = [...str];
-  
-    const arrSize = 9;
-    const newArr = [];
-  
-    for (let i = 0; i < arr.length; i += arrSize) {
-      const periodArray = arr
-        .slice(i, i + arrSize)
-        .map((item) => (item === "-" ? 0 : parseInt(item, 10)));
-      newArr.push(periodArray);
-    }
-    return newArr;
-  }
-
-// **********************************************************************************************
-
-function isValid(board, row, column, number) {
+// ******************************************************************************************
+function isSolved(board, row, column, number) {
   for (let i = 0; i < 9; i++) {
     if (board[row][i] === number || board[i][column] === number) {
       return false;
     }
   }
 
-    const startRow = Math.floor(row / 3) * 3;
-    const startColumn = Math.floor(column / 3) * 3;
-    for (let j = 0; j < 3; j++) {
-      for (let k = 0; k < 3; k++) {
-        if (board[j + startRow][k + startColumn] === number) {
-          return false;
-        }
+  const startRow = Math.floor(row / 3) * 3;
+  const startColumn = Math.floor(column / 3) * 3;
+  for (let j = 0; j < 3; j++) {
+    for (let k = 0; k < 3; k++) {
+      if (board[j + startRow][k + startColumn] === number) {
+        return false;
       }
     }
+  }
   return true;
 }
 
@@ -68,11 +74,12 @@ function solve(board) {
   let column = emptyPlace[1];
 
   for (let num = 1; num <= 9; num++) {
-    if (isValid(board, row, column, num)) {
+    let boardDone = [];
+    if (isSolved(board, row, column, num)) {
       board[row][column] = num;
 
       if (solve(board)) {
-        return board.map(el => el.join('|'))
+        return board;
       }
       board[row][column] = 0;
     }
@@ -91,28 +98,38 @@ function solve(board) {
   }
 }
 
-// **********************************************************************************************
-
-function isSolved(board) {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Возвращает булевое значение — решено это игровое поле или нет.
-   */
-}
-
-function prettyBoard() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Выводит в консоль/терминал судоку.
-   * Подумай, как симпатичнее его вывести.
-   */
-}
-
+// ******************************************************************************************
 const stringSudoku = read();
-
 const board = transformFromSptring(stringSudoku);
-
 const solvedBoard = solve(board);
+// ******************************************************************************************
+// меняем формат массива на выходе
+// использовали библиотеку table
+function prettyBoard(solvedBoard) {
+  const boardDone = solvedBoard;
+  const config = {
+    columnDefault: {
+      width: 1,
+    },
+    header: {
+      alignment: "center",
+      content: "Судоку приносит чувство спокойствия и порядка",
+    },
+  };
 
-console.table(solvedBoard);
+  // console.log(table(boardDone, config));
+  return table(boardDone, config);
+}
+console.log(prettyBoard(solvedBoard));
+
+
+module.exports = {
+  read,
+  transformFromSptring,
+  solve,
+  isSolved,
+  prettyBoard
+}
+
+
 
