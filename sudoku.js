@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 const fs = require("fs");
 
 function read() {
@@ -8,118 +9,34 @@ function read() {
   // разбиваем содержимое на отдельные строки
   const minBoard = board.split("\n").filter((line) => line !== "");
   // номер судоку
-  let minBoardNum = Number(process.argv[2]) || 2;
+  let minBoardNum = Number(process.argv[2]) || 15;
   // ограничиваем номер судоку (длина массива)
   if (minBoardNum > minBoard.length) {
     minBoardNum = minBoard.length;
   }
 
   const sudoku = minBoard[minBoardNum - 1];
-  // console.log(`судоку № ${minBoardNum}`);
+  console.log(`Вы приступили к решению судоку № ${minBoardNum}`);
   return sudoku; 
 }
 
-// function transformFromSptring() {
-//   const arr = [...str];
-
-//   const arrSize = 9;
-//   const newArr = [];
-
-//   for (let i = 0; i < arr.length; i += arrSize) {
-//     const periodArray = arr
-//       .slice(i, i + arrSize)
-//       .map((item) => (item === "-" ? 0 : parseInt(item, 10)));
-//     newArr.push(periodArray);
-//   }
-//   return newArr;
-// }
-
-
-
-// console.log(read())
-
-function solve() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции read.
-   * Возвращает игровое поле после попытки его решить.
-   */
-}
-
-function isSolved(board) {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Возвращает булевое значение — решено это игровое поле или нет.
-   */
-}
-
-function gorizontCheck(arr) {
-  for (let i = 0; i < arr.length; i++) {
-    const flattened = [].concat(...arr[i]);
-    const сheckNumbers = Array.from({ length: 9 }, (_, i) => i + 1).every(
-      (num) => flattened.includes(num)
-    );
-    if (!сheckNumbers) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function vertikalCheck(arr) {
-  const result = [];
-
-  for (let i = 0; i < arr.length; i++) {
-    const column = [];
-    for (let j = 0; j < arr.length; j++) {
-      column.push(arr[j][i]);
-    }
-    result.push(column);
-  }
-  return result;
-}
-
-function prettyBoard() {
-  /**
-   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
-   * Выводит в консоль/терминал судоку.
-   * Подумай, как симпатичнее его вывести.
-   */
-}
-
-
 // isWork
 function transformFromSptring(str) {
-  const arr = [...str];
-
-  const arrSize = 9;
-  const newArr = [];
-
-  for (let i = 0; i < arr.length; i += arrSize) {
-    const periodArray = arr
-      .slice(i, i + arrSize)
-      .map((item) => (item === "-" ? 0 : parseInt(item, 10)));
-    newArr.push(periodArray);
+    const arr = [...str];
+  
+    const arrSize = 9;
+    const newArr = [];
+  
+    for (let i = 0; i < arr.length; i += arrSize) {
+      const periodArray = arr
+        .slice(i, i + arrSize)
+        .map((item) => (item === "-" ? 0 : parseInt(item, 10)));
+      newArr.push(periodArray);
+    }
+    return newArr;
   }
-  return newArr;
-}
 
-const stringSudoku = read();
-
-// console.log(transformFromSptring(stringSudoku));
-
-function transformTo3x3(arr) {
-  const arrSize = 3;
-
-  const newArr = [];
-
-  for (let i = 0; i < arr.length; i += arrSize) {
-    newArr.push(arr.slice(i, i + arrSize));
-  }
-  return newArr;
-}
-// console.log(transformTo3x3(arr))
-
-// Work with solver
+// **********************************************************************************************
 
 function isValid(board, row, column, number) {
   for (let i = 0; i < 9; i++) {
@@ -140,7 +57,7 @@ function isValid(board, row, column, number) {
   return true;
 }
 
-function solver(board) {
+function solve(board) {
   let emptyPlace = findEmpty(board);
 
   // basic conditions for leaving
@@ -155,7 +72,7 @@ function solver(board) {
     if (isValid(board, row, column, num)) {
       board[row][column] = num;
 
-      if (solver(board)) {
+      if (solve(board)) {
         return board.map(el => el.join('|'))
       }
       board[row][column] = 0;
@@ -175,10 +92,28 @@ function solver(board) {
   }
 }
 
+// **********************************************************************************************
+
+function isSolved(board) {
+  /**
+   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
+   * Возвращает булевое значение — решено это игровое поле или нет.
+   */
+}
+
+function prettyBoard() {
+  /**
+   * Принимает игровое поле в том формате, в котором его вернули из функции solve.
+   * Выводит в консоль/терминал судоку.
+   * Подумай, как симпатичнее его вывести.
+   */
+}
+
+const stringSudoku = read();
 
 const board = transformFromSptring(stringSudoku);
 
-const solvedBoard = solver(board);
+const solvedBoard = solve(board);
 
 console.table(solvedBoard);
 
