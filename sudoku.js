@@ -17,7 +17,6 @@ function read() {
   }
   // выводим строку с номером судоку, чтобы понимать какой у нас судоку
   const sudoku = minBoard[minBoardNum - 1];
-<<<<<<< HEAD
   console.log(`Решение судоку № ${minBoardNum}`);
   return sudoku;
 }
@@ -41,10 +40,6 @@ function transformFromSptring(str) {
     newArr.push(periodArray);
   }
   return newArr;
-=======
-  console.log(`Вы приступили к решению судоку № ${minBoardNum}`);
-  return sudoku; 
->>>>>>> 595e19a129a83c59e8a1ff577feb001c32a970fd
 }
 
 // ******************************************************************************************
@@ -135,6 +130,5 @@ module.exports = {
   isSolved,
   prettyBoard
 }
-
 
 
