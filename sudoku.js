@@ -117,6 +117,7 @@ function transformTo3x3(arr) {
   }
   return newArr;
 }
+// console.log(transformTo3x3(arr))
 
 // Work with solver
 
